@@ -14,7 +14,19 @@ export default function BookList() {
         }).catch((err)=>{
             console.log(err);
         })
-      })
+      });
+
+
+      const handleDelete= async (bookID) =>{
+        try{
+            await axios.delete('http://localhost:5000/delete/'+bookID);
+            window.location.reload();
+        }
+        catch(err){
+            console.log(err);
+        }
+      }
+
   return (
     <div>
         <h2>Books Information System</h2>
@@ -41,7 +53,7 @@ export default function BookList() {
                     <td>{book.price}</td>
                     <td>
                     <button><Link to={`/update/${book.bookID}`} style={{textDecoration:'none'}}>Update</Link></button>       
-                    <button><Link to={`/delete/${book.bookID}`} style={{textDecoration:'none'}}>Delete</Link></button>       
+                    <button onClick={ e => handleDelete(book.bookID)}>Delete</button>       
                     </td>
                 </tr>
             )

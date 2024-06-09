@@ -65,10 +65,11 @@ app.put("/update/:bookID",(req,res)=>{
     })
 })
 
-app.post("/delete",(req,res)=>{
-    const sql = "DELETE FROM `books` WHERE 0";
-    
-    db.query(sql,(err,result)=>{
+app.delete("/delete/:bookID",(req,res)=>{
+    const sql = "DELETE FROM books WHERE bookID = ?";
+    const bookID = req.params.bookID;
+
+    db.query(sql,[bookID],(err,result)=>{
         if(err){
             return res.json("Error");
         }
