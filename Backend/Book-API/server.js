@@ -44,7 +44,36 @@ app.post("/add",(req,res)=>{
         }
         else{
             return res.json(result);
-            console.log("Book added successfully")
+        }
+    })
+})
+
+
+
+app.put("/update/:bookID",(req,res)=>{
+    const sql = "UPDATE books SET name = ?, author = ?, price = ? WHERE bookID = ?";
+    const { name, author, price } = req.body;
+    const bookID = req.params.bookID;
+
+    db.query(sql,[name, author, price, bookID],(err,result)=>{
+        if(err){
+            return res.json("Error");
+        }
+        else{
+            return res.json(result);
+        }
+    })
+})
+
+app.post("/delete",(req,res)=>{
+    const sql = "DELETE FROM `books` WHERE 0";
+    
+    db.query(sql,(err,result)=>{
+        if(err){
+            return res.json("Error");
+        }
+        else{
+            return res.json(result);
         }
     })
 })

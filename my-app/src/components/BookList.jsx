@@ -40,8 +40,8 @@ export default function BookList() {
                     <td>{book.author}</td>
                     <td>{book.price}</td>
                     <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                    <button><Link to={`/update/${book.bookID}`} style={{textDecoration:'none'}}>Update</Link></button>       
+                    <button><Link to={`/delete/${book.bookID}`} style={{textDecoration:'none'}}>Delete</Link></button>       
                     </td>
                 </tr>
             )
