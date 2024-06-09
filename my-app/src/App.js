@@ -12,6 +12,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<BookList/>}/>
+          <Route path='/add' element={<AddBook/>}/>
+          <Route path='/update' element={<UpdateBook/>}/>
+          <Route path='/delete' element={<DeleteBook/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -3,7 +3,8 @@ const app = express();
 const cors = require("cors");
 const mysql = require("mysql");
 
-app.use(cors())
+app.use(cors());
+app.use(express.json())
 
 const db = mysql.createConnection({
     host:"localhost",
@@ -23,12 +24,27 @@ app.get("/",(req,res)=>{
     db.query(sql,(err,data)=>{
         if(err){
             return res.json("Error");
-            console.log("Error")
         }
         else{
             return res.json(data);
-            console.log("Success")
+        }
+    })
+})
 
+app.post("/add",(req,res)=>{
+    const sql = "INSERT INTO books (name, author, price) VALUES (?)";
+    const values = [
+        req.body.name,
+        req.body.author,
+        req.body.price
+    ]
+    db.query(sql,[values],(err,result)=>{
+        if(err){
+            return res.json("Error");
+        }
+        else{
+            return res.json(result);
+            console.log("Book added successfully")
         }
     })
 })

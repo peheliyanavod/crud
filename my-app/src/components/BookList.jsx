@@ -1,5 +1,6 @@
 import React,{ useEffect, useState } from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 
 export default function BookList() {
@@ -17,7 +18,7 @@ export default function BookList() {
   return (
     <div>
         <h2>Books Information System</h2>
-        <button>Add</button>
+        <button><Link to="/add" style={{textDecoration:'none'}}>Add</Link></button>       
         <table>
             <thead>
                 <tr>
