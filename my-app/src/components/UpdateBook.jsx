@@ -19,6 +19,7 @@ export default function UpdateBook() {
   }
   return (
     <div>
+        <h2 className='title'>Add New Book</h2>
       <form>
         <label htmlFor="name">Name</label>
         <input type='text' placeholder='Enter the name' onChange={e=>setName(e.target.value)} />
@@ -29,7 +30,7 @@ export default function UpdateBook() {
         <label htmlFor="price">Price</label>
         <input type='text' placeholder='Enter the price' onChange={e=>setPrice(e.target.value)}/>
         <br/>
-        <button onClick={handleSubmit}>Update</button>
+        <button className='btn-s' onClick={handleSubmit}>Update</button>
       </form>
     </div>
   )

@@ -3,14 +3,18 @@ const app = express();
 const cors = require("cors");
 const mysql = require("mysql");
 
+
 app.use(cors());
 app.use(express.json())
+
 
 const db = mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"",
-    database:"crud"
+    database:"library_app"
+},()=>{
+    console.log("MySQL connected successfully");
 })
 
 const port = 5000;

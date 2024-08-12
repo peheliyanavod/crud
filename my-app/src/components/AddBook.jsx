@@ -18,6 +18,7 @@ export default function AddBook() {
 
   return (
     <div>
+      <h2 className='title'>Add New Book</h2>
       <form>
         <label htmlFor="name">Name</label>
         <input type='text' placeholder='Enter the name' onChange={e=>setName(e.target.value)} />
@@ -28,7 +29,7 @@ export default function AddBook() {
         <label htmlFor="price">Price</label>
         <input type='text' placeholder='Enter the price' onChange={e=>setPrice(e.target.value)}/>
         <br/>
-        <button onClick={handleSubmit}>Submit</button>
+        <button className='btn-s' onClick={handleSubmit}>Submit</button>
       </form>
     </div>
   )

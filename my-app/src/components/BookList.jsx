@@ -29,8 +29,8 @@ export default function BookList() {
 
   return (
     <div>
-        <h2>Books Information System</h2>
-        <button><Link to="/add" style={{textDecoration:'none'}}>Add</Link></button>       
+        <h2 className='title'>Books Information System</h2>
+        <button className='btn-a'><Link to="/add" style={{textDecoration:'none'}}>+ Add</Link></button>       
         <table>
             <thead>
                 <tr>
@@ -52,18 +52,13 @@ export default function BookList() {
                     <td>{book.author}</td>
                     <td>{book.price}</td>
                     <td>
-                    <button><Link to={`/update/${book.bookID}`} style={{textDecoration:'none'}}>Update</Link></button>       
-                    <button onClick={ e => handleDelete(book.bookID)}>Delete</button>       
+                    <button className='btn-u'><Link to={`/update/${book.bookID}`} style={{textDecoration:'none'}}>Update</Link></button>       
+                    <button className='btn-d' onClick={ e => handleDelete(book.bookID)}>Delete</button>       
                     </td>
                 </tr>
             )
             )}
-            
-                
-            </tbody>
-            
-            
-            
+            </tbody>      
         </table>
     </div>
   )
