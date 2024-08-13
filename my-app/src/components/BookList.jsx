@@ -10,7 +10,6 @@ export default function BookList() {
     useEffect(()=>{
         axios.get('http://localhost:5000').then((res)=>{
             setBooks(res.data);
-            console.log(books)
         }).catch((err)=>{
             console.log(err);
         })

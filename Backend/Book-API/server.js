@@ -3,89 +3,130 @@ const app = express();
 const cors = require("cors");
 const mysql = require("mysql");
 
-
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
-
-const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"",
-    database:"library_app"
-},()=>{
+const db = mysql.createConnection(
+  {
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "library_app",
+  },
+  () => {
     console.log("MySQL connected successfully");
-})
+  }
+);
 
 const port = 5000;
 
-app.listen(port,()=>{
-    console.log("Server is running on",port);
-})
+app.listen(port, () => {
+  console.log("Server is running on", port);
+});
 
-app.get("/",(req,res)=>{
-    const sql = "SELECT * from books";
-    db.query(sql,(err,data)=>{
-        if(err){
-            return res.json("Error");
+app.get("/", (req, res) => {
+  const sql = "SELECT * from books";
+  db.query(sql, (err, data) => {
+    if (err) {
+      return res.json("Error");
+    } else {
+      return res.json(data);
+    }
+  });
+});
+
+app.post("/add", (req, res) => {
+  const sql = "INSERT INTO books (name, author, price) VALUES (?)";
+  const values = [req.body.name, req.body.author, req.body.price];
+  db.query(sql, [values], (err, result) => {
+    if (err) {
+      return res.json("Error");
+    } else {
+      return res.json(result);
+    }
+  });
+});
+
+app.put("/update/:bookID", (req, res) => {
+  const sql =
+    "UPDATE books SET name = ?, author = ?, price = ? WHERE bookID = ?";
+  const { name, author, price } = req.body;
+  const bookID = req.params.bookID;
+
+  db.query(sql, [name, author, price, bookID], (err, result) => {
+    if (err) {
+      return res.json("Error");
+    } else {
+      return res.json(result);
+    }
+  });
+});
+
+app.delete("/delete/:bookID", (req, res) => {
+  const sql = "DELETE FROM books WHERE bookID = ?";
+  const bookID = req.params.bookID;
+
+  db.query(sql, [bookID], (err, result) => {
+    if (err) {
+      return res.json("Error");
+    } else {
+      return res.json(result);
+    }
+  });
+});
+
+app.post("/signup", (req, res) => {
+  const checkEmail = "SELECT * FROM users WHERE email = ?";
+
+  db.query(checkEmail, [req.body.email], (err, emailResult) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Database query error", error: err });
+    }
+
+    if (emailResult.length === 0) {
+      const sql = "INSERT INTO users (name, email, password) VALUES (?)";
+      const values = [req.body.name, req.body.email, req.body.password];
+      db.query(sql, [values], (err, result) => {
+        if (err) {
+          return res.json("Error");
+        } else {
+            return res.json("Successful");
         }
-        else{
-            return res.json(data);
+      });
+    } else {
+      return res.json("Email already registered");
+    }
+  });
+});
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  const sql = "SELECT * FROM users WHERE email = ?";
+
+  db.query(sql, [email], (err, result) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "Database query error", error: err });
+    }
+
+    if (result.length > 0) {
+      const user = result[0];
+      if (user) {
+        if (user.password === password) {
+          res.json("Successfull");
+        } else {
+          res.json("Incorrect password");
         }
-    })
-})
-
-app.post("/add",(req,res)=>{
-    const sql = "INSERT INTO books (name, author, price) VALUES (?)";
-    const values = [
-        req.body.name,
-        req.body.author,
-        req.body.price
-    ]
-    db.query(sql,[values],(err,result)=>{
-        if(err){
-            return res.json("Error");
-        }
-        else{
-            return res.json(result);
-        }
-    })
-})
-
-
-
-app.put("/update/:bookID",(req,res)=>{
-    const sql = "UPDATE books SET name = ?, author = ?, price = ? WHERE bookID = ?";
-    const { name, author, price } = req.body;
-    const bookID = req.params.bookID;
-
-    db.query(sql,[name, author, price, bookID],(err,result)=>{
-        if(err){
-            return res.json("Error");
-        }
-        else{
-            return res.json(result);
-        }
-    })
-})
-
-app.delete("/delete/:bookID",(req,res)=>{
-    const sql = "DELETE FROM books WHERE bookID = ?";
-    const bookID = req.params.bookID;
-
-    db.query(sql,[bookID],(err,result)=>{
-        if(err){
-            return res.json("Error");
-        }
-        else{
-            return res.json(result);
-        }
-    })
-})
-
-
-
-
+      }
+    } else {
+      res.json("User not found");
+    }
+  });
+});
 
 // const bookSet = [
 //     {
@@ -149,6 +190,3 @@ app.delete("/delete/:bookID",(req,res)=>{
 //         "price": 11.99
 //     }
 // ];
-
-
-// console.log(bookSet)
