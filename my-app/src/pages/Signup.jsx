@@ -19,7 +19,7 @@ const Signup = () => {
             const result =await axios.post("http://localhost:5000/signup", { name, email, password });
 
             if (result.data === "Successful") {
-                navigate("/login");
+                navigate("/");
             }
             if(result.data === "Email already registered"){
                 setError("Email already registered")

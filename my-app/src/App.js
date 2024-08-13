@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import UpdateBook from './components/UpdateBook';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
+import Welcome from './pages/Welcome';
 
 
 function App() {
@@ -12,9 +13,10 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<BookList/>}/>
+          <Route path='/home' element={<BookList/>}/>
           <Route path='/signup' element={<Signup/>}/>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/' element={<Login/>}/>
+          <Route path='/welcome' element={<Welcome/>}/>
           <Route path='/add' element={<AddBook/>}/>
           <Route path='/update/:bookID' element={<UpdateBook/>}/>
         </Routes>

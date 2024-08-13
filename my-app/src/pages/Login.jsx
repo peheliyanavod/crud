@@ -19,7 +19,7 @@ const Login = () => {
         password,
       });
       if (result.data === "Successfull") {
-        navigate("/");
+        navigate("/welcome");
       }
       if (
         result.data === "Incorrect password" ||
